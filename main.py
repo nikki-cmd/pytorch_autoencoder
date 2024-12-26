@@ -7,7 +7,7 @@ tensor_transform = transforms.ToTensor()
 dataset = datasets.MNIST(root = "./data",
                          train = True,
                          download=True,
-                         tranform = tensor_transform)
+                         transform = tensor_transform)
 
 loader = torch.utils.data.DataLoader(dataset=dataset,
                                      batch_size = 32,
@@ -19,26 +19,26 @@ class AE(torch.nn.Module):
         
         self.encoder = torch.nn.Sequential(
             torch.nn.Linear(28 * 28, 128),
-            torch.nn.Relu(),
+            torch.nn.ReLU(),
             torch.nn.Linear(128, 64),
-            torch.nn.Relu(),
+            torch.nn.ReLU(),
             torch.nn.Linear(64, 36),
-            torch.nn.Relu(),
+            torch.nn.ReLU(),
             torch.nn.Linear(36, 18),
-            torch.nn.Relu(),
+            torch.nn.ReLU(),
             torch.nn.Linear(18, 9)
             
         )
         
         self.decoder = torch.nn.Sequential(
             torch.nn.Linear(9, 18),
-            torch.nn.Relu(),
+            torch.nn.ReLU(),
             torch.nn.Linear(18, 36),
-            torch.nn.Relu(),
+            torch.nn.ReLU(),
             torch.nn.Linear(36, 64),
-            torch.nn.Relu(),
+            torch.nn.ReLU(),
             torch.nn.Linear(64, 128),
-            torch.nn.Relu(),
+            torch.nn.ReLU(),
             torch.nn.Linear(128, 28*28)
         )
     
@@ -71,6 +71,7 @@ for epoch in range(epochs):
         optimizer.step()
         
         losses.append(loss)
+        print(f'epoch:{epoch}, loss:{loss}')
     outputs.append((epochs, image, reconstructed))
 plt.style.use('fivethirtyeight')
 plt.xlabel('Iterations')
