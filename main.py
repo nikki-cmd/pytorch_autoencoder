@@ -2,6 +2,7 @@ import torch
 from torchvision import datasets, transforms
 import matplotlib.pyplot as plt
 
+
 tensor_transform = transforms.ToTensor()
 
 dataset = datasets.MNIST(root = "./data",
@@ -73,6 +74,14 @@ for epoch in range(epochs):
         losses.append(loss)
         print(f'epoch:{epoch}, loss:{loss}')
     outputs.append((epochs, image, reconstructed))
+
+torch.save(model.state_dict(), 'models')
+
+
+model = AE()
+model.load_state_dict(torch.load('models', weights_only=True))
+model.eval()
+
 plt.style.use('fivethirtyeight')
 plt.xlabel('Iterations')
 plt.ylabel('Loss')
